@@ -2,9 +2,11 @@ package pl.kursy.filtry.zadanie.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
+@ToString
 @Entity
 @Getter
 @Table(name = "USERDATA")

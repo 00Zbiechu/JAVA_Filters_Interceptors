@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import pl.kursy.filtry.zadanie.filter.UserFilter;
+import pl.kursy.filtry.zadanie.filter.RequestAuthorizationHeaderFilter;
 
 @SpringBootApplication
 public class ZadanieApplication {
@@ -15,12 +15,12 @@ public class ZadanieApplication {
 
 
 	@Bean
-	public FilterRegistrationBean<UserFilter> loginFilter(){
+	public FilterRegistrationBean<RequestAuthorizationHeaderFilter> loginFilter(){
 
-		FilterRegistrationBean<UserFilter> filter = new FilterRegistrationBean<>();
+		FilterRegistrationBean<RequestAuthorizationHeaderFilter> filter = new FilterRegistrationBean<>();
 
-		filter.setFilter(new UserFilter());
-		filter.addUrlPatterns("/login");
+		filter.setFilter(new RequestAuthorizationHeaderFilter());
+		filter.addUrlPatterns("/login/*");
 		filter.setOrder(1);
 
 		return filter;
