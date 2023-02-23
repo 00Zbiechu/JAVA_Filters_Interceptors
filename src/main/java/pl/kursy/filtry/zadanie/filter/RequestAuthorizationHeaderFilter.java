@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
+import pl.kursy.filtry.zadanie.exception.AuthorizationException;
 
+import javax.security.sasl.AuthenticationException;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,10 +31,7 @@ public class RequestAuthorizationHeaderFilter implements Filter {
 
             if (req.getHeader("Authorization").isEmpty()) {
 
-                log.info("Access Denied, cause wrong authorization value");
-
-                resp.sendError(HttpServletResponse.SC_UNAUTHORIZED,
-                        "Access Denied, cause wrong authorization value");
+                throw new AuthorizationException();
 
             } else {
 
@@ -42,7 +41,9 @@ public class RequestAuthorizationHeaderFilter implements Filter {
 
             }
 
-        } catch (Exception e) {
+        }catch (AuthorizationException e){
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied, cause wrong authorization value");
+        }catch (Exception e) {
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "No Authorization header");
         }
 

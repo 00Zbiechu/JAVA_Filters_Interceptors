@@ -1,7 +1,6 @@
 package pl.kursy.filtry.zadanie.interceptor;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -28,7 +27,9 @@ public class CustomResponseBodyAdviceAdapter implements ResponseBodyAdvice<Objec
     @Override
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType,
                                   Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
+
         if (serverHttpRequest instanceof ServletServerHttpRequest && serverHttpResponse instanceof ServletServerHttpResponse) {
+
             loggingService.logResponse(((ServletServerHttpRequest) serverHttpRequest).getServletRequest(),
                     ((ServletServerHttpResponse) serverHttpResponse).getServletResponse(), o);
         }

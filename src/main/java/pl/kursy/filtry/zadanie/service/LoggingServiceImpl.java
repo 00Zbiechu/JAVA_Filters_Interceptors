@@ -15,7 +15,7 @@ import java.util.Map;
 public class LoggingServiceImpl implements LoggingService {
 
     @Override
-    public void logRequest(HttpServletRequest httpServletRequest, Object body) {
+    public void logRequest(HttpServletRequest httpServletRequest) {
 
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -23,9 +23,6 @@ public class LoggingServiceImpl implements LoggingService {
         stringBuilder.append("method=[").append(httpServletRequest.getMethod()).append("] ");
         stringBuilder.append("headers=[").append(buildHeadersMap(httpServletRequest)).append("] ");
 
-        if (body != null) {
-            stringBuilder.append("body=[").append(body).append("]");
-        }
 
         log.info(stringBuilder.toString());
 
@@ -45,11 +42,12 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     private Map<String, String> buildHeadersMap(HttpServletRequest request) {
+
         Map<String, String> map = new HashMap<>();
 
         Enumeration<String> headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
-            String key = (String) headerNames.nextElement();
+            String key = headerNames.nextElement();
             String value = request.getHeader(key);
             map.put(key, value);
         }

@@ -18,7 +18,7 @@ public class LogInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
-            loggingService.logRequest(request, null);
+            loggingService.logRequest(request);
 
         return true;
     }
