@@ -1,11 +1,11 @@
 package pl.kursy.filtry.zadanie.filter;
 
+
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.ContentCachingResponseWrapper;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -17,13 +17,11 @@ public class ResponseAddIDFilter implements Filter {
             throws IOException, ServletException {
 
 
-        ContentCachingResponseWrapper resp = new ContentCachingResponseWrapper((HttpServletResponse) servletResponse);
+        HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
         resp.addHeader("REQUEST_ID", UUID.randomUUID().toString());
 
         filterChain.doFilter(servletRequest,servletResponse);
-
-        resp.copyBodyToResponse();
 
 
     }

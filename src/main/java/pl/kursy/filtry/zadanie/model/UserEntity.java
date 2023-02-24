@@ -1,15 +1,13 @@
 package pl.kursy.filtry.zadanie.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.ToString;
 
 @ToString
 @Entity
 @Getter
-@Table(name = "USERDATA")
 public class UserEntity {
 
     @Id
